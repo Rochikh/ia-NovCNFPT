@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation IA - 2 Jours</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 60px 80px;
+            background: white;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #667eea;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #667eea;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            color: #764ba2;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin: 25px 0 15px 0;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        li {
+            font-size: 1.3em;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.4em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .day-header h2 {
+            color: white;
+            border: none;
+            margin: 0;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .activity-box {
+            background: #f0f8ff;
+            border-left: 5px solid #764ba2;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .activity-box h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            background: rgba(255,255,255,0.9);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="timer">00:00</div>
+    
+    <div class="presentation">
+        <!-- Slide 1: Titre -->
+        <div class="slide active">
+            <h1>Formation de formateurs et formatrices</h1>
+            <p class="subtitle">Intégrer l'IA de la conception à l'évaluation d'une formation</p>
+            <div class="box" style="background: linear-gradient(135deg, #0078d4 0%, #50e6ff 100%); color: white;">
+                <p style="font-size: 1.8em; color: white; font-weight: bold; margin-bottom: 15px;">Outil principal : Microsoft Copilot</p>
+                <p style="font-size: 1.2em; color: white;">+ Outils complémentaires pour enrichir ta pratique</p>
+            </div>
+            <div class="box" style="margin-top: 20px;">
+                <p style="font-size: 1.5em; color: #333; font-weight: bold;">Formation sur 2 jours</p>
+                <p style="font-size: 1.2em; color: #666; margin-top: 15px;">18 et 19 novembre 2025</p>
+                <p style="font-size: 1.2em; color: #666; margin-top: 10px;">Strasbourg</p>
+            </div>
+            <div class="slide-number">1/10</div>
+        </div>
+
+        <!-- Slide 2: Jour 1 - Vue d'ensemble -->
+        <div class="slide">
+            <div class="day-header">
+                <h2>Jour 1 - Lundi 18 novembre</h2>
+                <p style="font-size: 1.3em; margin-top: 15px;">Maîtriser Microsoft Copilot pour créer tes contenus pédagogiques</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Objectifs du jour 1</div>
+                <ul>
+                    <li>Expliquer les principes fondamentaux de l'IA générative</li>
+                    <li>Identifier les cas d'usage pertinents dans ta pratique de formateur ou formatrice</li>
+                    <li>Utiliser Microsoft Copilot pour produire des contenus pédagogiques</li>
+                    <li>Enrichir ta pratique avec des outils complémentaires (NotebookLM, Napkin)</li>
+                    <li>Appliquer la transparence et la vérification dans ton utilisation</li>
+                </ul>
+            </div>
+            <div class="slide-number">2/10</div>
+        </div>
+
+        <!-- Slide 3: Jour 1 Matin -->
+        <div class="slide">
+            <h2>Jour 1 - Matin (9h-12h30)</h2>
+            
+            <div class="section">
+                <div class="section-title">Objectifs de la matinée</div>
+                <ul>
+                    <li>Expliquer comment fonctionne l'IA générative</li>
+                    <li>Lister tes besoins de création de contenus</li>
+                    <li>Utiliser Microsoft Copilot pour produire des supports pédagogiques</li>
+                    <li>Comparer Copilot avec NotebookLM pour l'analyse documentaire</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Activités</div>
+                
+                <div class="activity-box">
+                    <h4>Activité 1 : Partage de pratiques (30 min)</h4>
+                    <p>En binôme, tu partages une situation concrète où tu manques de temps pour créer du contenu pédagogique. Mise en commun collective.</p>
+                </div>
+
+                <div class="activity-box" style="border-left-color: #0078d4; background: #f0f8ff;">
+                    <h4>Activité 2 : Découverte Microsoft Copilot (1h15)</h4>
+                    <p><strong>Outil principal : Microsoft Copilot</strong></p>
+                    <p>Tu utilises Copilot pour créer du contenu pédagogique à partir de tes documents. Tu génères une synthèse de cours, des questions d'évaluation, et une activité pédagogique. Tu analyses ce qui fonctionne et ce qui nécessite correction.</p>
+                </div>
+
+                <div class="activity-box">
+                    <h4>Activité 3 : Comparaison avec NotebookLM (45 min)</h4>
+                    <p><strong>Outil complémentaire : NotebookLM</strong></p>
+                    <p>Tu testes le même exercice avec NotebookLM (génération de FAQ, podcast). Tu compares les forces de chaque outil. Discussion collective sur quand utiliser l'un ou l'autre.</p>
+                </div>
+            </div>
+            <div class="slide-number">3/10</div>
+        </div>
+
+        <!-- Slide 4: Jour 1 Après-midi -->
+        <div class="slide">
+            <h2>Jour 1 - Après-midi (14h-17h30)</h2>
+            
+            <div class="section">
+                <div class="section-title">Objectifs de l'après-midi</div>
+                <ul>
+                    <li>Utiliser Copilot pour structurer tes formations</li>
+                    <li>Produire des visuels pédagogiques avec Copilot et Napkin</li>
+                    <li>Concevoir des activités pour tes participant·es</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Activités</div>
+                
+                <div class="activity-box" style="border-left-color: #0078d4; background: #f0f8ff;">
+                    <h4>Activité 4 : Structuration de formation avec Copilot (1h)</h4>
+                    <p><strong>Outil principal : Microsoft Copilot</strong></p>
+                    <p>Tu utilises Copilot pour structurer un module de formation complet : objectifs pédagogiques, déroulé, activités, supports. Tu demandes également à Copilot de générer des idées de visuels pour ton contenu.</p>
+                </div>
+
+                <div class="activity-box">
+                    <h4>Activité 5 : Enrichissement visuel avec Napkin (1h)</h4>
+                    <p><strong>Outil complémentaire : Napkin</strong></p>
+                    <p>Tu prends un concept complexe de ta formation. Tu le transformes en visuels avec Napkin. Tu compares avec ce que Copilot peut générer comme descriptions visuelles. Tu identifies quand utiliser chaque outil.</p>
+                </div>
+
+                <div class="activity-box" style="border-left-color: #0078d4; background: #f0f8ff;">
+                    <h4>Activité 6 : Conception d'activité pédagogique (1h15)</h4>
+                    <p><strong>Outil principal : Microsoft Copilot</strong></p>
+                    <p>Tu conçois une activité complète pour tes participant·es en utilisant Copilot. Tu testes ton activité avec un·e autre participant·e et tu donnes un retour constructif.</p>
+                </div>
+            </div>
+            <div class="slide-number">4/10</div>
+        </div>
+
+        <!-- Slide 5: Jour 2 - Vue d'ensemble -->
+        <div class="slide">
+            <div class="day-header">
+                <h2>Jour 2 - Mardi 19 novembre</h2>
+                <p style="font-size: 1.3em; margin-top: 15px;">Utiliser Copilot pour l'évaluation et développer l'esprit critique</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Objectifs du jour 2</div>
+                <ul>
+                    <li>Utiliser Microsoft Copilot pour produire des quiz et exercices</li>
+                    <li>Explorer AI Studio pour des cas multimodaux spécifiques</li>
+                    <li>Développer l'esprit critique face à l'IA</li>
+                    <li>Concevoir des évaluations adaptées à l'ère de l'IA</li>
+                    <li>Élaborer un projet concret avec Copilot</li>
+                </ul>
+            </div>
+            <div class="slide-number">5/10</div>
+        </div>
+
+        <!-- Slide 6: Jour 2 Matin -->
+        <div class="slide">
+            <h2>Jour 2 - Matin (9h-12h30)</h2>
+            
+            <div class="section">
+                <div class="section-title">Objectifs de la matinée</div>
+                <ul>
+                    <li>Utiliser Microsoft Copilot pour créer des évaluations</li>
+                    <li>Élaborer des exercices de détection d'erreurs avec Copilot</li>
+                    <li>Comparer avec AI Studio pour des cas multimodaux</li>
+                    <li>Développer l'esprit critique chez tes participant·es</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Activités</div>
+                
+                <div class="activity-box" style="border-left-color: #0078d4; background: #f0f8ff;">
+                    <h4>Activité 7 : Création d'évaluations avec Copilot (1h15)</h4>
+                    <p><strong>Outil principal : Microsoft Copilot</strong></p>
+                    <p>Tu utilises Copilot pour créer un quiz complet à partir de tes documents de formation. Tu génères 10 questions de niveaux variés (connaissance, compréhension, application, analyse). Tu vérifies la pertinence et corriges.</p>
+                </div>
+
+                <div class="activity-box" style="border-left-color: #0078d4; background: #f0f8ff;">
+                    <h4>Activité 8 : Exercice de détection d'erreurs (1h)</h4>
+                    <p><strong>Outil principal : Microsoft Copilot</strong></p>
+                    <p>Tu demandes à Copilot de créer un texte avec 3 erreurs subtiles sur un sujet de ta formation. Tu testes si les erreurs sont détectables. Tu affines pour créer un exercice pédagogique robuste.</p>
+                </div>
+
+                <div class="activity-box">
+                    <h4>Activité 9 : Découverte AI Studio pour le multimodal (45 min)</h4>
+                    <p><strong>Outil complémentaire : AI Studio</strong></p>
+                    <p>Tu explores AI Studio pour analyser simultanément texte, images et vidéos. Tu compares avec Copilot et identifies les cas où AI Studio apporte une vraie valeur ajoutée.</p>
+                </div>
+            </div>
+            <div class="slide-number">6/10</div>
+        </div>
+
+        <!-- Slide 7: Jour 2 Après-midi -->
+        <div class="slide">
+            <h2>Jour 2 - Après-midi (14h-17h30)</h2>
+            
+            <div class="section">
+                <div class="section-title">Objectifs de l'après-midi</div>
+                <ul>
+                    <li>Élaborer une évaluation adaptée à l'IA avec Copilot</li>
+                    <li>Développer un projet complet de formation avec Copilot</li>
+                    <li>Intégrer les outils complémentaires selon les besoins</li>
+                    <li>Planifier les prochaines étapes de ton appropriation</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Activités</div>
+                
+                <div class="activity-box" style="border-left-color: #0078d4; background: #f0f8ff;">
+                    <h4>Activité 10 : Conception d'évaluation avec Copilot (1h30)</h4>
+                    <p><strong>Outil principal : Microsoft Copilot</strong></p>
+                    <p>Tu choisis une approche évaluative (situation IA-résistante, utilisation documentée, ou esprit critique). Tu utilises Copilot pour concevoir une évaluation complète pour une de tes formations, en intégrant si besoin les outils complémentaires.</p>
+                </div>
+
+                <div class="activity-box" style="border-left-color: #0078d4; background: #f0f8ff;">
+                    <h4>Activité 11 : Projet personnel avec Copilot (1h30)</h4>
+                    <p><strong>Outil principal : Microsoft Copilot (+ outils complémentaires au besoin)</strong></p>
+                    <p>Tu travailles sur un projet concret : création d'un module de formation complet avec Copilot (de la conception à l'évaluation). Tu intègres NotebookLM, Napkin ou AI Studio uniquement si cela apporte une vraie valeur ajoutée à ton projet.</p>
+                </div>
+
+                <div class="activity-box">
+                    <h4>Activité 12 : Partage et clôture (30 min)</h4>
+                    <p>Tu présentes ton projet en 3 minutes. Le groupe te donne un retour. Tu identifies tes prochaines étapes d'appropriation de Copilot et des outils complémentaires.</p>
+                </div>
+            </div>
+            <div class="slide-number">7/10</div>
+        </div>
+
+        <!-- Slide 8: Écosystème des outils -->
+        <div class="slide">
+            <h2>Écosystème des Outils IA</h2>
+            
+            <div class="box" style="background: linear-gradient(135deg, #0078d4 0%, #50e6ff 100%); color: white; padding: 40px; margin: 30px 0;">
+                <h3 style="color: white; margin-bottom: 20px; font-size: 2em;">Microsoft Copilot</h3>
+                <p style="font-size: 1.3em; line-height: 1.6;">Outil fil conducteur de la formation. Polyvalent, il couvre 80% de tes besoins : création de contenu, structuration de formation, génération d'exercices, conception d'évaluations.</p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Outils complémentaires (cas spécifiques)</div>
+                
+                <div class="box" style="background: #f8f9fa; margin: 15px 0;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">NotebookLM</h4>
+                    <p style="font-size: 1.1em;">Quand utiliser : Analyse documentaire approfondie avec plusieurs sources, génération de podcasts pédagogiques.</p>
+                </div>
+
+                <div class="box" style="background: #f8f9fa; margin: 15px 0;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">Napkin</h4>
+                    <p style="font-size: 1.1em;">Quand utiliser : Création rapide de visuels pédagogiques variés (diagrammes, frises, arborescences).</p>
+                </div>
+
+                <div class="box" style="background: #f8f9fa; margin: 15px 0;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">AI Studio</h4>
+                    <p style="font-size: 1.1em;">Quand utiliser : Analyse multimodale simultanée (vidéo + PDF + images) pour des cas très spécifiques.</p>
+                </div>
+            </div>
+            
+            <div class="slide-number">8/9</div>
+        </div>
+
+        <!-- Slide 9: Les 3 approches évaluatives -->
+        <div class="slide">
+            <h2>Les 3 Approches Évaluatives à explorer</h2>
+            
+            <div class="box" style="background: #e8f5e9; border-left-color: #28a745;">
+                <h3 style="color: #28a745;">Approche 1 : Situations IA-résistantes</h3>
+                <p style="font-size: 1.2em; margin-top: 10px;">Tu évalues par oral, en direct, avec justification de choix. L'IA peut aider à préparer, mais l'évaluation reste humaine et synchrone.</p>
+            </div>
+
+            <div class="box" style="background: #e3f2fd; border-left-color: #2196f3;">
+                <h3 style="color: #2196f3;">Approche 2 : Utilisation documentée</h3>
+                <p style="font-size: 1.2em; margin-top: 10px;">Tu demandes de documenter le processus de création avec l'IA. Tu évalues le chemin autant que le résultat.</p>
+            </div>
+
+            <div class="box" style="background: #fff3e0; border-left-color: #ff9800;">
+                <h3 style="color: #ff9800;">Approche 3 : Formation à l'esprit critique</h3>
+                <p style="font-size: 1.2em; margin-top: 10px;">Tu crées des exercices de détection d'erreurs dans des contenus IA. L'IA devient objet d'apprentissage.</p>
+            </div>
+            
+            <div class="slide-number">9/10</div>
+        </div>
+
+        <!-- Slide 10: Principes transversaux -->
+        <div class="slide">
+            <h2>Principes Transversaux des 2 Jours</h2>
+            
+            <div class="box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px;">
+                <h3 style="color: white; margin-bottom: 20px;">Transparence</h3>
+                <p style="font-size: 1.2em; line-height: 1.6;">Si tu utilises l'IA pour créer du contenu, tu le dis à tes participant·es. Tu leur montres comment tu l'utilises. C'est pédagogique.</p>
+            </div>
+
+            <div class="box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; margin-top: 20px;">
+                <h3 style="color: white; margin-bottom: 20px;">Vérification systématique</h3>
+                <p style="font-size: 1.2em; line-height: 1.6;">L'IA invente des informations. Tu vérifies toujours ce qu'elle produit. Tu n'utilises jamais un contenu généré sans le relire et le corriger.</p>
+            </div>
+
+            <div class="box" style="margin-top: 20px; padding: 30px;">
+                <p style="font-size: 1.4em; text-align: center; color: #667eea; font-weight: bold;">
+                    L'IA ne te remplace pas. Elle te libère du temps pour l'accompagnement pédagogique.
+                </p>
+            </div>
+            
+            <div class="slide-number">10/10</div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Précédent</button>
+        <button class="nav-btn" onclick="nextSlide()">Suivant →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        let startTime = Date.now();
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.querySelector('.timer').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        setInterval(updateTimer, 1000);
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                previousSlide();
+            }
+        }
+    </script>
+</body>
+</html>
