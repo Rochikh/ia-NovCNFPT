@@ -28,8 +28,9 @@
             width: 100%;
             height: 100%;
             display: none;
-            padding: 60px 80px;
+            padding: 60px 80px 120px 80px;
             background: white;
+            overflow-y: auto;
         }
 
         .slide.active {
@@ -204,6 +205,134 @@
             font-weight: bold;
             color: #667eea;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px 140px 20px;
+                overflow-y: auto;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+                padding-bottom: 10px;
+            }
+
+            h3 {
+                font-size: 1.3em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            li {
+                font-size: 1em;
+                padding-left: 30px;
+                line-height: 1.4;
+            }
+
+            .box {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .day-header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .day-header h2 {
+                font-size: 1.4em;
+            }
+
+            .day-header p {
+                font-size: 1em;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+            }
+
+            .activity-box {
+                padding: 15px;
+                margin: 10px 0;
+            }
+
+            .activity-box h4 {
+                font-size: 1.1em;
+            }
+
+            .activity-box p {
+                font-size: 0.95em;
+            }
+
+            .navigation {
+                bottom: 20px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .timer {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+
+            .slide-number {
+                bottom: 10px;
+                right: 20px;
+                font-size: 12px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 20px 15px 160px 15px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 5px;
+                bottom: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                width: 100%;
+                max-width: 200px;
+            }
         }
     </style>
 </head>
