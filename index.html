@@ -17,10 +17,30 @@
             overflow: hidden;
         }
 
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+            }
+        }
+
         .presentation {
             position: relative;
             width: 100vw;
             height: 100vh;
+        }
+
+        @media (max-width: 768px) {
+            .presentation {
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .presentation {
+                height: auto;
+                min-height: 100vh;
+            }
         }
 
         .slide {
@@ -209,9 +229,26 @@
 
         /* Responsive Mobile */
         @media (max-width: 768px) {
+            body {
+                overflow: auto;
+            }
+
+            .presentation {
+                height: auto;
+                min-height: 100vh;
+            }
+
             .slide {
+                position: relative;
                 padding: 30px 20px 140px 20px;
-                overflow-y: auto;
+                overflow-y: visible;
+                -webkit-overflow-scrolling: touch;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .slide.active {
+                display: block;
             }
 
             h1 {
@@ -275,6 +312,7 @@
             .navigation {
                 bottom: 20px;
                 gap: 10px;
+                z-index: 2000;
             }
 
             .nav-btn {
@@ -287,12 +325,14 @@
                 right: 10px;
                 padding: 10px 15px;
                 font-size: 1em;
+                z-index: 2000;
             }
 
             .slide-number {
                 bottom: 10px;
                 right: 20px;
                 font-size: 12px;
+                z-index: 1500;
             }
 
             .grid {
@@ -308,7 +348,11 @@
 
         @media (max-width: 480px) {
             .slide {
+                position: relative;
                 padding: 20px 15px 160px 15px;
+                height: auto;
+                min-height: 100vh;
+                overflow-y: visible;
             }
 
             h1 {
@@ -325,6 +369,7 @@
                 flex-direction: column;
                 gap: 5px;
                 bottom: 10px;
+                z-index: 2000;
             }
 
             .nav-btn {
@@ -708,22 +753,32 @@
 
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
 
         document.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         });
 
         document.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             handleSwipe();
         });
 
         function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                nextSlide();
-            }
-            if (touchEndX > touchStartX + 50) {
-                previousSlide();
+            const diffX = Math.abs(touchEndX - touchStartX);
+            const diffY = Math.abs(touchEndY - touchStartY);
+            
+            // Only treat as swipe if horizontal movement is greater than vertical
+            if (diffX > diffY && diffX > 50) {
+                if (touchEndX < touchStartX - 50) {
+                    nextSlide();
+                }
+                if (touchEndX > touchStartX + 50) {
+                    previousSlide();
+                }
             }
         }
     </script>
